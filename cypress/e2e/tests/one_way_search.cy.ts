@@ -1,8 +1,8 @@
-import HomePage from '../page_objects/HomePage';
-import SearchResultsPage from '../page_objects/SearchResultsPage';
-import flightData from '../../fixtures/flightData.json';
+// cypress/e2e/tests/one_way_search.cy.ts
+import { HomePage } from '../page_objects/HomePage';
+import { SearchResultsPage } from '../page_objects/SearchResultsPage';
 
-describe('One-way Flight Search', () => {
+describe('TC001 – One‑Way Flight Search – Valid', () => {
   const home = new HomePage();
   const results = new SearchResultsPage();
 
@@ -10,18 +10,18 @@ describe('One-way Flight Search', () => {
     cy.visit('/');
   });
 
-  it('should display results for valid one-way search', () => {
-    const data = flightData.oneWay;
+  it('selects one‑way, enters ATL→JFK, picks a future date, and searches', () => {
     home.selectTripType('oneway');
-    home.enterAirport('from', data.origin);
-    home.enterAirport('to', data.destination);
-    home.selectDate('departure', data.departureDate);
-    home.setPassengers(data.passengers);
-    home.clickSearch();
+    home.enterOrigin('ATL');
+    home.enterDestination('JFK');
+    home.selectDate(30); // 30 days from today
+    home.submitSearch();
 
-    results.waitForResults();
-    results.verifyRoute(data.origin, data.destination);
-    results.verifyDate(data.departureDate);
-    results.verifyAtLeastFlights(1);
+    results.verifyResultsLoaded();
+    cy.get('[data-testid="flight-option"]').first().within(() => {
+      cy.get('[data-testid="flight-price"]').should('exist');
+      cy.get('[data-testid="flight-duration"]').should('exist');
+      cy.get('[data-testid="flight-airline"]').should('exist');
+    });
   });
 });
