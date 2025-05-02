@@ -1,0 +1,15 @@
+{
+    "oneWay": {
+      "origin": "ATL",
+      "destination": "LAX",
+      "departureDate": "2025-06-01",
+      "passengers": { "adults": 1, "children": 0, "infantsLap": 0 }
+    },
+    "roundTrip": {
+      "origin": "JFK",
+      "destination": "SFO",
+      "departureDate": "2025-06-10",
+      "returnDate": "2025-06-15",
+      "passengers": { "adults": 1, "children": 0, "infantsLap": 0 }
+    }
+  }

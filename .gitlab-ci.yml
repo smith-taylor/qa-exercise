@@ -1,0 +1,15 @@
+stages:
+  - test
+
+test:e2e:
+  image: cypress/base:14.17.0
+  stage: test
+  script:
+    - npm ci
+    - npm run cy:run
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos
+      - cypress/screenshots
+  parallel: 2
